@@ -22,6 +22,7 @@ const HomeScreen = () => {
                 {loading ? (<h2>Loading</h2>)
                 : error ? (<h2>{error}</h2>)
                 : (products.map((product) => <Product 
+                        key={product._id}
                         productId={product._id}
                         name={product.name}
                         description={product.description}

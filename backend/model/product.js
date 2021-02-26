@@ -19,6 +19,10 @@ User = mongoose.model(
             type: String,
             required: true,
         },
+        countInStock: {
+            type: Number,
+            required: true,
+        },
     },
     {timestamps: true}
     )

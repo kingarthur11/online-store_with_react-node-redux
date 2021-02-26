@@ -1,13 +1,14 @@
 const Product = require("../model/product");
 
 exports.create = async (req, res) => {
-    const {name, description, imageUrl, price} = req.body;
+    const {name, description, imageUrl, price, countInStock} = req.body;
     try {
         const product = new Product({
             name, 
             description, 
             imageUrl, 
-            price  
+            price,
+            countInStock  
         });
     const data = await product.save(product)
     res.send({product: data})
@@ -33,7 +34,7 @@ exports.findOne = async (req, res) => {
     const {id} = req.params;
     try {
         let data = await Product.findById(id);
-        res.send({product: data})        
+        res.send(data)        
     } catch (error) {
         res.status(500)
             .send({message: "error retrieving"})
@@ -45,9 +46,9 @@ exports.update = async (req, res) => {
         if(!req.body){
             return res.status(400).send({message: 'Data to update cannot be empty'})}
         const _id = req.params.id; 
-        let {name, description, imageUrl, price} = req.body;
+        let {name, description, imageUrl, price, countInStock} = req.body;
         const data = await Product.findByIdAndUpdate(
-            { _id}, { $set: {name, description, imageUrl, price}}, {useFindAndModify: false});
+            { _id}, { $set: {name, description, imageUrl, price, countInStock}}, {useFindAndModify: false});
         res.send({product: data})
     } catch (error) {
         res.status(500)

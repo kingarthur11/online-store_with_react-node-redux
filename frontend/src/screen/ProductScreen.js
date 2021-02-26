@@ -1,23 +1,40 @@
 import './ProductScreen.css'
+import {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {getProductDetails} from '../redux/actions/productAction';
+import {addToCart} from '../redux/actions/cartActions';
 
-const ProductScreen = () => {
+const ProductScreen = ({match, history}) => {
+    const [qty, setQty] = useState(1);
+    const dispatch = useDispatch();
+    const productDetails = useSelector(state => state.getProductDetails);
+    const {loading, error, product} = productDetails;
+
+    useEffect(() => {
+        if (product && match.params.id !== product._id) {
+            dispatch(getProductDetails(match.params.id))
+        }
+    }, [dispatch, product, match]);
+
     return (
         <div className="productscreen">
-            <div className="productscreen__left">
+            {loading ? <h2>Loading...</h2> : 
+            error ? <h2>{error}</h2> :
+            (<>
+                <div className="productscreen__left">
                 <div className="left__image">
-                <img src="https://picsum.photos/id/0/5616/3744" alt="product"/>
+                    <img src={product.imageUrl} alt={product.name}/>
                 </div>
                 <div className="left__info">
-                    <p className="left__name">Product Name</p>
-                    <p>Price: $499.9</p>
-                    <p>Elit incididunt consectetur cillum fugiat 
-                        anim cupidatat velit.</p>
+                    <p className="left__name">{product.name}</p>
+                    <p>Price: ${product.price}</p>
+                    <p>{product.description}</p>
                 </div>
             </div>
             <div className="productioncreen__right">
                 <div className="right__info">
-                    <p>Price: <span>$399.9</span></p>
-                    <p>Status: <span>In stock</span></p>
+                    <p>Price: <span>${product.price}</span></p>
+                    <p>Status: <span>{product.countInStock > 0 ? "In stock" : "Out of Stock"}</span></p>
                     <p>Qty 
                         <select>
                             <option value="1">1</option>
@@ -29,6 +46,9 @@ const ProductScreen = () => {
                     <p><button type="button">Add to Cart</button>  </p>
                 </div>
             </div>
+             </>   
+            )}
+            
         </div>
     )
 }
