@@ -10,10 +10,10 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.use(cors({
-    origin: "http://localhost:3000",
-    credentials: true
-  }))
+// app.use(cors({
+//     origin: "http://localhost:3000",
+//     credentials: true
+//   }))
   
 app.use('/', routes);
 
@@ -31,6 +31,6 @@ const {
   PORT
 } = process.env;
 
-app.listen(4000, function(){
+app.listen(PORT || 4000, function(){
     console.log('app is listening on port 4000');
 })

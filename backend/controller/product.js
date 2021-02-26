@@ -21,7 +21,7 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
      try {
          const data = await Product.find({});
-         res.send({products: data})
+         res.send(data)
      } catch(error) {
          res.status(500).send({
              message: error.message || "soething went wrong"

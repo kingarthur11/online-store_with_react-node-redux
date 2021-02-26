@@ -8,7 +8,8 @@ import {getProducts as listProducts} from '../redux/actions/productAction';
 const HomeScreen = () => {
     const dispatch = useDispatch();
     const getProducts = useSelector(state => state.getProduct);
-    const {product, loading, error} = getProducts;
+    const {products, loading, error} = getProducts;
+    console.log(getProducts)
 
     useEffect (() => {
         dispatch(listProducts())
@@ -18,13 +19,14 @@ const HomeScreen = () => {
         <div className="homescreen">
             <h2 className="homesreen__title">Latest Products</h2>
             <div className="homescreen__products">
-                <Product />
-                <Product />
-                <Product />
-                <Product />
-                <Product />
-                <Product />
-                <Product />
+                {loading ? (<h2>Loading</h2>)
+                : error ? (<h2>{error}</h2>)
+                : (products.map((product) => <Product 
+                        productId={product._id}
+                        name={product.name}
+                        description={product.description}
+                        price={product.price}
+                        imageUrl={product.imageUrl}/>))}
             </div>
         </div>
     )
