@@ -31,6 +31,6 @@ const {
   PORT
 } = process.env;
 
-app.listen(PORT || 4000, function(){
+app.listen(4000, function(){
     console.log('app is listening on port 4000');
 })

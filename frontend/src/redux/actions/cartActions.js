@@ -13,9 +13,9 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
             price: data.price,
             qty
         }
-    })
+    });
     localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems))
-}
+};
 
 export const removeFromCart = (id) => (dispatch, getState) => {
     dispatch({
